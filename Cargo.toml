@@ -1,0 +1,17 @@
+[package]
+name = "hash_perf"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ahash = "0.7"
+fxhash = "*"
+hashbrown_13 = { package = "hashbrown", version = "0.13", features = ["serde", "inline-more"], no_default = true }
+hashbrown_12 = { package = "hashbrown", version = "0.12", features = ["serde", "inline-more"], no_default = true }
+
+[profile.release]
+lto = 'fat'
+debug = true
+optlevel = 3
