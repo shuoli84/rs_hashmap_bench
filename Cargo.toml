@@ -11,6 +11,18 @@ fxhash = "*"
 hashbrown_13 = { package = "hashbrown", version = "0.13", features = ["serde", "inline-more"], no_default = true }
 hashbrown_12 = { package = "hashbrown", version = "0.12", features = ["serde", "inline-more"], no_default = true }
 
+[dev-dependencies]
+criterion = "0.3"
+rand = "0.8"
+
+[[bench]]
+name = "bench_hashmap"
+harness = false
+
+[[example]]
+name = "main"
+path = "src/main.rs"
+
 [profile.release]
 lto = 'fat'
 debug = true
