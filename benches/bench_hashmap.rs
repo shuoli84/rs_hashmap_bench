@@ -48,7 +48,7 @@ fn bench_insert<H: TestMap>(values: &[u64], c: &mut Criterion) {
 }
 
 pub fn cirterion_benchmark_get(c: &mut Criterion) {
-    for n in [2000, 10000, 20000_u64] {
+    for n in [2000, 10000_u64] {
         let mut rng = rand::thread_rng();
         let mut values = Vec::with_capacity(n as usize);
         for _ in 0..n {
@@ -57,22 +57,18 @@ pub fn cirterion_benchmark_get(c: &mut Criterion) {
 
         let values = &values;
 
+        bench_get::<StdDefault>(values, c);
+
         bench_get::<StdFxHash>(values, c);
-        bench_get::<HashBrown12FxHash>(values, c);
         bench_get::<HashBrown13FxHash>(values, c);
 
         bench_get::<StdAHash>(values, c);
-        bench_get::<HashBrown12AHash>(values, c);
         bench_get::<HashBrown13AHash>(values, c);
-
-        bench_get::<StdAHashFixed>(values, c);
-        bench_get::<HashBrown12AHashFixed>(values, c);
-        bench_get::<HashBrown13AHashFixed>(values, c);
     }
 }
 
 pub fn cirterion_benchmark_insert(c: &mut Criterion) {
-    for n in [2000, 10000, 20000_u64] {
+    for n in [2000, 10000] {
         let mut rng = rand::thread_rng();
         let mut values = Vec::with_capacity(n as usize);
         for _ in 0..n {
@@ -81,20 +77,13 @@ pub fn cirterion_benchmark_insert(c: &mut Criterion) {
 
         let values = &values;
 
-        bench_insert::<StdBTreeMap>(values, c);
         bench_insert::<StdDefault>(values, c);
 
         bench_insert::<StdFxHash>(values, c);
-        bench_insert::<HashBrown12FxHash>(values, c);
         bench_insert::<HashBrown13FxHash>(values, c);
 
         bench_insert::<StdAHash>(values, c);
-        bench_insert::<HashBrown12AHash>(values, c);
         bench_insert::<HashBrown13AHash>(values, c);
-
-        bench_insert::<StdAHashFixed>(values, c);
-        bench_insert::<HashBrown12AHashFixed>(values, c);
-        bench_insert::<HashBrown13AHashFixed>(values, c);
     }
 }
 
