@@ -10,10 +10,10 @@ fn prepare_test_hashmap<H: TestMap>(values: &[u64]) -> H {
     map
 }
 
-fn run_get<H: TestMap>(map: &H, keys: &[u64], result: &mut Vec<u64>) {
+fn run_get<H: TestMap>(map: &H, keys: &[u64], result: &mut u64) {
     for key in keys.iter() {
         if let Some(v) = map.get(*key) {
-            result.push(*v);
+            *result = *v;
         }
     }
 }
@@ -26,13 +26,13 @@ fn run_insert<H: TestMap>(map: &mut H, values: &[u64]) {
 
 fn bench_get<H: TestMap>(values: &[u64], c: &mut Criterion) {
     let type_name = H::type_name();
-    let mut result = Vec::with_capacity(values.len());
 
     let n = values.len() as u64;
 
     let map = prepare_test_hashmap::<H>(values);
     c.bench_function(&format!("get_{type_name}_{n}"), |b| {
-        b.iter(|| run_get(&map, values, &mut result))
+        let mut result = 0;
+        b.iter(|| run_get(&map, values, &mut result));
     });
 }
 
