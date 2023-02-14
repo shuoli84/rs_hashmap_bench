@@ -5,14 +5,14 @@ use rand::RngCore;
 fn prepare_test_hashmap<H: TestMap>(values: &[u64]) -> H {
     let mut map = H::default();
     for v in values.iter() {
-        map.insert(*v, *v);
+        map.test_insert(*v, *v);
     }
     map
 }
 
 fn run_get<H: TestMap>(map: &H, keys: &[u64], result: &mut u64) {
     for key in keys.iter() {
-        if let Some(v) = map.get(*key) {
+        if let Some(v) = map.test_get(*key) {
             *result = *v;
         }
     }
@@ -20,7 +20,7 @@ fn run_get<H: TestMap>(map: &H, keys: &[u64], result: &mut u64) {
 
 fn run_insert<H: TestMap>(map: &mut H, values: &[u64]) {
     for key in values.iter() {
-        map.insert(*key, *key);
+        map.test_insert(*key, *key);
     }
 }
 
@@ -59,6 +59,9 @@ pub fn cirterion_benchmark_get(c: &mut Criterion) {
 
         bench_get::<StdDefault>(values, c);
 
+        bench_get::<StdRustcHash>(values, c);
+        bench_get::<HashBrown13RustcHash>(values, c);
+
         bench_get::<StdFxHash>(values, c);
         bench_get::<HashBrown13FxHash>(values, c);
 
@@ -78,6 +81,9 @@ pub fn cirterion_benchmark_insert(c: &mut Criterion) {
         let values = &values;
 
         bench_insert::<StdDefault>(values, c);
+
+        bench_insert::<StdRustcHash>(values, c);
+        bench_insert::<HashBrown13RustcHash>(values, c);
 
         bench_insert::<StdFxHash>(values, c);
         bench_insert::<HashBrown13FxHash>(values, c);

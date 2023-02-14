@@ -9,6 +9,8 @@ pub fn test_hash<H: TestMap, F: Fn(&H, u64) -> Option<&u64>>(get_f: F) {
 fn main() {
     test_hash(hashbrown_13_ahash);
     test_hash(hashbrown_13_fxhash);
+    test_hash(hashbrown_13_rustc_hash);
     test_hash(std_fxhash);
     test_hash(std_ahash);
+    test_hash(std_rustc_hash);
 }

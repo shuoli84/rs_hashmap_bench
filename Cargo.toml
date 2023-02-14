@@ -7,7 +7,8 @@ edition = "2021"
 
 [dependencies]
 ahash = "0.8"
-fxhash = "*"
+fxhash = "0.2"
+rustc-hash = "1.1"
 hashbrown_13 = { package = "hashbrown", version = "0.13", features = ["serde", "inline-more"], no_default = true }
 hashbrown_12 = { package = "hashbrown", version = "0.12", features = ["serde", "inline-more"], no_default = true }
 
